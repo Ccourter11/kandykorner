@@ -1,6 +1,8 @@
 // My Main App Component
 
 import React from "react";
+import { ApplicationViews } from "./ApplicationViews";
+
 
 
 export const KandyKorner = () => (
@@ -13,3 +15,4 @@ export const KandyKorner = () => (
         </address>
     </>
 )
+
