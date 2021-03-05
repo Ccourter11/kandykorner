@@ -6,11 +6,11 @@ import { LocationProvider } from "./locations/LocationProvider"
 export const ApplicationViews = () => {
     return (
       <>
+        <LocationProvider>
         <Route exact path="/locations">
-          <LocationProvider>
             <LocationList />
-          </LocationProvider>
         </Route>
+      </LocationProvider>
       </>
     )
   } 
