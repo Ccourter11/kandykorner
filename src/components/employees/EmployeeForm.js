@@ -20,87 +20,77 @@ export const EmployeeForm = () => {
     useEffect(() => {
         getLocations()
     }, [])
-    // ADD CONDITIONAL TO MAKE SURE ALL FIELDS ARE COMPLETE
-    const handleInputChange = (event) => { 
+
+    // Add a conditional to make sure all fields are complete
+    const handleControlledInputChange = (event) => {
         const newEmployee = {...employee}
-         let selectedVal = event.target.value
-
-         //  handles booleans (manager and fullTime)
-         if(event.target.id.includes("null")) {
-             const [property,] = event.target.id.split("__")
-
-                if(event.target.value === "true") {
-                   const boolean = true
-                //    debugger
-                   newEmployee[property] = boolean
-                } else {
-                    const boolean = false
-                    newEmployee[property] = boolean
-                }
-                setEmployee(newEmployee)
-         } else 
-        //  handles integers
-         if(event.target.id === "locationId" || event.target.id === "hourlyRate") {
-            // If user backspaces, this conditional prevents NaN from being rendered
-            if(selectedVal === "") {
-                selectedVal = 0
-            }
-
-            selectedVal = parseInt(selectedVal)
-            newEmployee[event.target.id] = selectedVal
-            setEmployee(newEmployee)
-        } else {
-            
-            newEmployee[event.target.id] = selectedVal
-            setEmployee(newEmployee)
-            console.log(newEmployee)
+    
+        let setValue = event.target.value
+    
+        if (event.target.id.includes("Id")){
+          setValue = parseInt(setValue)
         }
+    
+        if (event.target.type === "radio"){
+          newEmployee[event.target.className] = (setValue === "true")
+        } else {
+          newEmployee[event.target.id] = setValue
+        }
+    
+        setEmployee(newEmployee)
+      }
+    
+      const handleSaveEmployee = (event) => {
+        event.preventDefault()
+    
+        if (employee.locationId === 0){
+          window.alert("You must choose a location!")
+        } else {
+          addEmployee(employee)
+          .then(history.push("/employees"))
+        }
+      }
 
-    }
-
-    const handleSaveEmployeeClick = () => {
-        addEmployee(employee)
-        .then(history.push("/employees"))
-    }
 
     return (
-        <form>
-            <fieldset>
-                <label htmlFor="name"></label>
-                <input type="text" id="name" onChange={handleInputChange} Required value={employee.name} placeholder="Employee Name"/>
-            </fieldset>
-            <fieldset>
-                <label htmlFor="location"></label>
-                <select id="locationId" onChange={handleInputChange}>
-                    <option value="0"> Select a location</option>
-                    {
-                        locations.map(location => <option key={location.id} value={location.id}>{location.name}</option>)
-                    }
-                </select>
-            </fieldset>
-            <fieldset>
-                <label htmlFor="level"></label>
-                <select id="manager__null" onChange={handleInputChange}>
-                    <option value="0"> Select a level</option>
-                    <option value="true"> Manager</option>
-                    <option value="false"> Staff</option>
-                </select>
-            </fieldset>
-            <fieldset>
-                <label htmlFor="fte"></label>
-                <select id="fullTime__null" onChange={handleInputChange}>
-                    <option value="0"> Select an FTE status</option>
-                    <option value="true"> Full Time</option>
-                    <option value="false"> Part Time</option>
-                </select>
-            </fieldset>
-            <fieldset>
-                <label htmlFor="hourlyRate" ></label>
-                <input id="hourlyRate" Required value={employee.hourlyRate} onChange={handleInputChange} placeholder="Hourly Rate of Pay"></input>
-            </fieldset>
-            <button onClick={handleSaveEmployeeClick}>Save Employee</button>
-
+        <form className="employeeForm">
+          <h2 className="employeeForm__title">Employee Form</h2>
+          <fieldset className="form-group">
+            <label htmlFor="name">Name: </label>
+            <input type="text" id="name" onChange={handleControlledInputChange} required autoFocus placeholder="Name..."></input>
+          </fieldset>
+          <fieldset className="form-group">
+            <select defaultValue={employee.location} id="locationId" name="locationId" onChange={handleControlledInputChange}>
+              <option value="0">Choose a location...</option>
+              {locations.map(location => (
+                <option key={location.id} value={location.id}>
+                  {location.address}
+                </option>
+              ))}
+            </select>
+          </fieldset>
+          <fieldset className="form-group">
+            <label htmlFor="manager">Manager: </label>
+            <input type="radio" name="manager" className="manager" value="true" onChange={handleControlledInputChange} />
+            <label htmlFor="true">Yes</label>
+            <input type="radio" name="manager" className="manager" value="false" onChange={handleControlledInputChange} />
+            <label htmlFor="false">No</label>
+          </fieldset>
+          <fieldset className="form-group">
+            <label htmlFor="fullTime">Full-Time: </label>
+            <input type="radio" name="fullTime" className="fullTime" value="true" onChange={handleControlledInputChange} />
+            <label htmlFor="true">Yes</label>
+            <input type="radio" name="fullTime" className="fullTime" value="false" onChange={handleControlledInputChange} />
+            <label htmlFor="false">No</label>
+          </fieldset>
+          <fieldset className="form-group">
+            <label htmlFor="hourlyRate">Hourly Rate: </label>
+            <input type="number" id="hourlyRate" onChange={handleControlledInputChange} required></input>
+          </fieldset>
+          <button className="btn" onClick={handleSaveEmployee}>
+            Save Employee
+          </button>
         </form>
-        
-    )
-}
+      )
+    }
+

@@ -1,10 +1,13 @@
 import React from "react"
-import "./Employee.css";
 
-export const EmployeeCard = ({ employee }) => (
-    <section className="employee">
-        <h2>{employee.name}</h2>
-        <h4>Postion : {employee.position}</h4>
-        <p><b>City:</b> {employee.city}</p>
-    </section>
-)
+export const EmployeeCard = (props) => {
+  return (
+    <div className="employee">
+      <div className="employee__name">{props.employee.name}</div>
+      <div className="employee__location">{props.location.address}</div>
+      <div className="employee__manager">{props.employee.manager ? "Manager" : "Staff"}</div>
+      <div className="employee__fullTime">{props.employee.fullTime ? "Full-time" : "Part-time"}</div>
+      <div className="employee__rate">{parseInt(props.employee.hourlyRate).toFixed(2)}</div>
+    </div>
+  )
+}
