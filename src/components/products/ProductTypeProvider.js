@@ -1,8 +1,8 @@
 import React, { createContext, useState } from "react"
 
-export const ProductTypeContext = createContext()
+export const ProductTypesContext = createContext()
 
-export const ProductTypeProvider = (props) => {
+export const ProductTypesProvider = (props) => {
   const [productTypes, setProductTypes] = useState([])
 
   const getProductTypes = () => {
@@ -12,10 +12,10 @@ export const ProductTypeProvider = (props) => {
   }
 
   return (
-    <ProductTypeContext.Provider value={{
+    <ProductTypesContext.Provider value={{
       productTypes, getProductTypes
     }}>
       {props.children}
-    </ProductTypeContext.Provider>
+    </ProductTypesContext.Provider>
   )
 }
