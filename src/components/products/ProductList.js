@@ -1,10 +1,12 @@
 import React, { useContext, useEffect } from "react"
-import { ProductTypeContext } from "./ProductTypeProvider"
+// import { ProductTypeContext } from "./ProductTypeProvider"
 import { ProductCard } from "./ProductCard"
-
+import { ProductContext } from "./ProductsProvider"
 
 export const ProductList = () => {
-  const {products, getProducts} = useContext(ProductTypeContext)
+  const {products, getProducts} = useContext(ProductContext)
+
+// import { LocationCard } from "./LocationCard"
   // The useContext hook allows you to use data structures and functions that a parent provider component exposes.
     // To start, you need to import the context object you created in the provider 
     // component so that the Context hook can access the objects it exposes.
