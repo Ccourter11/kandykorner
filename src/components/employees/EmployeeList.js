@@ -16,6 +16,8 @@ export const EmployeeList = () => {
     .then(getEmployees)
   }, [])
 
+  
+
   return (
     <>
     <h2 className="employees__title">Employees</h2>
